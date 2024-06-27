@@ -2,15 +2,6 @@
 
 _A homemade humble library to run automated python crypto trading bots_
 
-
-\
-🌷 Setup commands
--------------
-> git clone https://github.com/chumba-trading.git\
-> bash chumba-trading/install.sh
-
-
-
 \
 ⚠️ Disclaimer
 -------------
