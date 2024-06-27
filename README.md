@@ -1,24 +1,22 @@
 # chumba-trading
 
-This repository contains code for a cryptocurrency trading bot that uses an LSTM model to predict future prices and make trading decisions. The bot can be backtested using historical data and is designed to learn and improve over time.
+This repository contains code for a cryptocurrency trading bot that can be run on the live exchange e.g Bitget or binance
 
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
-- [Files](#files)
-- [Training the Model](#training-the-model)
-- [Backtesting the Model](#backtesting-the-model)
-- [Live Trading](#live-trading)
+- [Requirements](#requirements)
+- [Additional code for aws](#additional code for aws)
 - [License](#license)
+- [Disclaimer](#Disclaimer)
 
 ## Installation
 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/chumbacash/crypto-ml-trading-bot.git
-    cd crypto-trading-ml-bot
+    git clone https://github.com/chumbacash/chumba-trading.git
+    cd chumba-trading
     ```
 
 2. Create a virtual environment and activate it:
@@ -34,40 +32,43 @@ This repository contains code for a cryptocurrency trading bot that uses an LSTM
     pip install -r requirements.txt
     ```
 
-## Usage
+## Requirements
+Python >= 3.12
 
-### Files
+## Additional code to be run on aws
 
-- `data/data.csv`: The historical cryptocurrency data file.
-- `models/lstm_model.h5`: The pre-trained LSTM model.
-- `scripts/train_model.py`: Script to train the model.
-- `scripts/backtest.py`: Script to backtest the trading strategy.
-- `scripts/live_trading_bot.py`: Script for live trading (optional).
+1. what you need to know these promts for linux/ubuntu:
 
-### Training the Model
+    You can replace the .pem file with yours then open the directory/command promt from where you saved the file usually to be placed on  (.ssh) folder.
 
-To train the model, run the `train_model.py` script. Ensure you have the historical data in the `data` folder.
+    ```bash
+    ssh -i "chumbacash-trading.pem" ubuntu@ec2-35-180-252-174.eu-west-3.compute.amazonaws.com
+    ```
+    Crontab -e will promt when youre running on your machine you can select 1 (I don't remember exactly what it was but 1 is great)
 
-   ```bash
-   python scripts/train_model.py
-   ```
+    ```bash
+    crontab  -e 
+    ```
+    In this shell file you need to edit and save the files you want to run e.g run.py , run_btc.py and many more you can place the files to run here and it will follow the crontab inputs to ensure that it runs the task programmed. 
 
-### Backtesting the Model
+    ```bash
+    bash chumba-trading/code/run_envelope.sh
+    ```
+    nano is used to navigate into the (.py) scripts. while (ls) is used to check the files in a paticular folder within where you're
+    cd is to navigate
+    cp run.py run_btc.py is like cloning the run.py script and creating a run_btc.py using the script you just created
 
-To backtest the model, run the `backtest.py` script. This will simulate trading on historical data and output the performance metrics.
+    ```bash
+    nano
+    ls
+    cd 
+    cp run.py run_btc.py
+    ```
+    This is used to run your scripts after a paticular time e.g in the below script it will be used to run the script on the start of each candle or beginning of the hour
 
-  ```bash
-  python scripts/backtest.py
-  ```
-
-### Live Trading
-
-For live trading, you can use the `live_trading_bot.py` script (optional). Note that this script is a template and will need to be customized with your trading platform API details.
-
-  ```bash
-  python scripts/live_trading_bot.py
-  ```
-
+    ```bash
+    0 * * * * bash LiveTradingBots/code/run_envelope.sh >> LiveTradingBots/envelope.log 2>&1
+    ```
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
